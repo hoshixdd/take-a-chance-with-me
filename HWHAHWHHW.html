@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Butterflies From a Programmer</title>
+  <style>
+    body {
+      margin: 0;
+      background: radial-gradient(circle at center, #1a1a2e, #0f0f1a);
+      overflow: hidden;
+      height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+    }
+
+    .title {
+      position: absolute;
+      top: 30px;
+      width: 100%;
+      text-align: center;
+      color: white;
+      font-size: 2em;
+      z-index: 10;
+      text-shadow: 0 0 10px #ff69b4;
+    }
+
+    .butterfly {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background: radial-gradient(circle, rgba(255,182,193,0.8), rgba(255,105,180,0.6));
+      border-radius: 50%;
+      box-shadow: 0 0 10px rgba(255,105,180,0.7);
+      animation: floatUp linear infinite;
+      pointer-events: none;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(100vh) scale(1);
+        opacity: 0;
+      }
+      20% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-10vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+
+    button {
+      position: absolute;
+      bottom: 40px;
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 14px 28px;
+      font-size: 18px;
+      border: none;
+      border-radius: 8px;
+      background: linear-gradient(145deg, #ff69b4, #ff1493);
+      color: white;
+      cursor: pointer;
+      box-shadow: 0 0 20px #ff69b4;
+      transition: transform 0.3s, box-shadow 0.3s;
+      z-index: 10;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+      box-shadow: 0 0 30px #ff69b4, 0 0 60px #ff1493;
+    }
+  </style>
+</head>
+<body>
+  <div class="title">Butterflies from a Programmer 🦋</div>
+  <button onclick="alert('You released more butterflies! 🦋✨')">Release More Butterflies</button>
+
+  <script>
+    function createButterfly() {
+      const butterfly = document.createElement("div");
+      butterfly.classList.add("butterfly");
+
+      // random starting position
+      butterfly.style.left = Math.random() * window.innerWidth + "px";
+      butterfly.style.animationDuration = (4 + Math.random() * 4) + "s";
+      butterfly.style.opacity = Math.random();
+
+      // flutter left and right
+      butterfly.animate([
+        { transform: 'translateY(100vh) translateX(0px)' },
+        { transform: 'translateY(0vh) translateX(' + (Math.random() * 100 - 50) + 'px)' }
+      ], {
+        duration: parseFloat(butterfly.style.animationDuration) * 1000,
+        iterations: 1,
+        easing: 'ease-in-out'
+      });
+
+      document.body.appendChild(butterfly);
+
+      setTimeout(() => {
+        butterfly.remove();
+      }, parseFloat(butterfly.style.animationDuration) * 1000);
+    }
+
+    // spawn butterflies continuously
+    setInterval(createButterfly, 300);
+  </script>
+</body>
+</html>
